@@ -9,13 +9,13 @@ export default function OrderDrawer({
   onClose,
   items,
   onNoteChange,
-  onSubmit,
+  onCheckout,
 }: {
   open: boolean;
   onClose: () => void;
   items: OrderItem[];
   onNoteChange: (id: string, note: string) => void;
-  onSubmit: (generalNote?: string) => void;
+  onCheckout: (generalNote?: string) => void;
 }) {
   const { t } = useTranslation();
   const [generalNote, setGeneralNote] = useState("");
@@ -41,7 +41,7 @@ export default function OrderDrawer({
           >
             <div className="max-w-2xl mx-auto px-6 py-8">
               <div className="flex justify-between items-center mb-8">
-                <h3 className="font-display text-3xl text-espresso">{t("menu.viewOrder")}</h3>
+                <h3 className="font-display text-3xl text-brand-deep">{t("menu.viewOrder")}</h3>
                 <button onClick={onClose} className="text-stone" aria-label="Close">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <line x1="5" y1="5" x2="19" y2="19" />
@@ -66,25 +66,25 @@ export default function OrderDrawer({
                         placeholder={t("menu.addNote")}
                         defaultValue={it.note}
                         onChange={(e) => onNoteChange(it.id, e.target.value)}
-                        className="mt-2 w-full bg-transparent border-b border-sand text-sm py-1 focus:outline-none focus:border-espresso"
+                        className="mt-2 w-full bg-transparent border-b border-sand text-sm py-1 focus:outline-none focus:border-brand-deep"
                       />
                     </div>
                   ))}
-                  <div className="flex justify-between pt-4 font-display text-xl text-espresso">
-                    <span>Total</span>
+                  <div className="flex justify-between pt-4 font-display text-xl text-brand-deep">
+                    <span>{t("payment.total")}</span>
                     <span>{total} kr</span>
                   </div>
                   <textarea
                     placeholder={t("menu.generalNote")}
                     value={generalNote}
                     onChange={(e) => setGeneralNote(e.target.value)}
-                    className="w-full border border-sand bg-transparent p-3 text-sm h-20 focus:outline-none focus:border-espresso"
+                    className="w-full border border-sand bg-transparent p-3 text-sm h-20 focus:outline-none focus:border-brand-deep"
                   />
                   <button
-                    onClick={() => onSubmit(generalNote || undefined)}
-                    className="w-full bg-espresso text-cream py-4 text-sm tracking-widest uppercase hover:bg-charcoal transition"
+                    onClick={() => onCheckout(generalNote || undefined)}
+                    className="w-full bg-brand-deep text-offwhite py-4 text-sm tracking-widest uppercase hover:bg-brand-dark transition"
                   >
-                    {t("menu.send")} →
+                    {t("payment.toCheckout")} →
                   </button>
                 </div>
               )}

@@ -33,6 +33,21 @@
     "weekdays": "Mon–Fri   07:00–18:00",
     "weekends": "Sat–Sun   08:00–17:00"
   },
+  "payment": {
+    "heading": "Payment",
+    "total": "Total",
+    "card": "Card",
+    "phone": "Swish number",
+    "cardNumber": "Card number",
+    "expiry": "Expiry",
+    "openSwish": "Open Swish",
+    "pay": "Pay",
+    "processing": "Processing…",
+    "paid": "Paid",
+    "back": "Back",
+    "toCheckout": "Continue to payment",
+    "demoNote": "Demo — no real payment is processed."
+  },
   "footer": { "rights": "© 2025 Ohhi" },
   "admin": {
     "pin": "Enter PIN",

@@ -1,5 +1,7 @@
 // TODO: Replace with Supabase realtime / Firebase for production.
-// This uses localStorage for demo purposes only.
+// Current implementation uses localStorage for the demo only.
+// Payment status is recorded here but no real money moves —
+// hook in Swish for Merchants API + Stripe PaymentIntents in production.
 
 export type OrderStatus = "pending" | "preparing" | "ready" | "served";
 
@@ -18,9 +20,12 @@ export type Order = {
   note?: string;
   status: OrderStatus;
   createdAt: number;
+  paid: boolean;
+  paymentMethod?: "swish" | "card";
+  total: number;
 };
 
-const KEY = "ohhi_orders_v1";
+const KEY = "ohhi_orders_v2";
 
 export function loadOrders(): Order[] {
   if (typeof window === "undefined") return [];
@@ -35,6 +40,8 @@ export function loadOrders(): Order[] {
 export function saveOrders(orders: Order[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(KEY, JSON.stringify(orders));
+  // Notify any listeners (admin dashboard) via storage event.
+  window.dispatchEvent(new Event("ohhi_orders_changed"));
 }
 
 export function addOrder(order: Omit<Order, "id" | "createdAt" | "status">): Order {

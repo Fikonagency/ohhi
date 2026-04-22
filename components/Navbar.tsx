@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,23 +23,23 @@ export default function Navbar() {
       <motion.nav
         initial={false}
         animate={{
-          backgroundColor: scrolled ? "rgba(245,240,232,0.95)" : "rgba(245,240,232,0)",
-          borderBottomColor: scrolled ? "#D4C4A8" : "rgba(212,196,168,0)",
+          backgroundColor: scrolled ? "rgba(248,245,238,0.95)" : "rgba(248,245,238,0)",
+          borderBottomColor: scrolled ? "#E3DAC6" : "rgba(227,218,198,0)",
         }}
         transition={{ duration: 0.3 }}
         className="fixed top-0 inset-x-0 z-50 border-b backdrop-blur-sm"
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
-          <Link href="/" className="font-display text-2xl md:text-3xl text-espresso tracking-tight">
-            Ohhi
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-3 flex items-center justify-between">
+          <Link href="/" className="relative w-12 h-12 md:w-14 md:h-14" aria-label="Ohhi">
+            <Image src="/bilder/logo.png" alt="Ohhi" fill sizes="56px" style={{ objectFit: "contain" }} />
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm">
-            <Link href="/menu" className="hover:text-espresso transition">{t("nav.menu")}</Link>
-            <Link href="/#about" className="hover:text-espresso transition">{t("nav.about")}</Link>
-            <Link href="/#visit" className="hover:text-espresso transition">{t("nav.visit")}</Link>
+            <Link href="/menu" className="text-brand-deep hover:text-brand-dark transition">{t("nav.menu")}</Link>
+            <Link href="/#about" className="text-brand-deep hover:text-brand-dark transition">{t("nav.about")}</Link>
+            <Link href="/#visit" className="text-brand-deep hover:text-brand-dark transition">{t("nav.visit")}</Link>
             <LanguageToggle />
           </div>
-          <button className="md:hidden text-charcoal" onClick={() => setOpen(true)} aria-label="Open menu">
+          <button className="md:hidden text-brand-deep" onClick={() => setOpen(true)} aria-label="Open menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <line x1="3" y1="7" x2="21" y2="7" />
               <line x1="3" y1="17" x2="21" y2="17" />
@@ -55,16 +56,18 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[60] bg-cream md:hidden flex flex-col"
           >
-            <div className="flex justify-between items-center px-6 py-4">
-              <span className="font-display text-2xl text-espresso">Ohhi</span>
-              <button onClick={() => setOpen(false)} aria-label="Close menu">
+            <div className="flex justify-between items-center px-6 py-3">
+              <div className="relative w-12 h-12">
+                <Image src="/bilder/logo.png" alt="Ohhi" fill sizes="48px" style={{ objectFit: "contain" }} />
+              </div>
+              <button onClick={() => setOpen(false)} aria-label="Close menu" className="text-brand-deep">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <line x1="5" y1="5" x2="19" y2="19" />
                   <line x1="19" y1="5" x2="5" y2="19" />
                 </svg>
               </button>
             </div>
-            <div className="flex-1 flex flex-col items-center justify-center gap-8 text-2xl font-display">
+            <div className="flex-1 flex flex-col items-center justify-center gap-8 text-2xl font-display text-brand-deep">
               <Link href="/menu" onClick={() => setOpen(false)}>{t("nav.menu")}</Link>
               <Link href="/#about" onClick={() => setOpen(false)}>{t("nav.about")}</Link>
               <Link href="/#visit" onClick={() => setOpen(false)}>{t("nav.visit")}</Link>

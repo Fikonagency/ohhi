@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
-export default function OrderConfirmation({ onBack }: { onBack: () => void }) {
+export default function OrderConfirmation({ onBack, method }: { onBack: () => void; method?: "swish" | "card" | null }) {
   const { t } = useTranslation();
   return (
     <motion.div
@@ -10,13 +10,16 @@ export default function OrderConfirmation({ onBack }: { onBack: () => void }) {
       animate={{ opacity: 1, y: 0 }}
       className="min-h-screen flex flex-col items-center justify-center px-6 text-center grain"
     >
-      <div className="w-10 h-px bg-stone mb-8" />
-      <div className="font-display text-4xl md:text-5xl text-espresso max-w-xl leading-tight">
+      <div className="w-10 h-px bg-brand mb-8" />
+      <div className="text-xs tracking-[0.3em] uppercase text-brand mb-6">
+        {method === "swish" ? "Swish · " : method === "card" ? t("payment.card") + " · " : ""}{t("payment.paid")}
+      </div>
+      <div className="font-display text-4xl md:text-5xl text-brand-deep max-w-xl leading-tight">
         {t("menu.confirmed")}
       </div>
       <button
         onClick={onBack}
-        className="mt-10 text-sm tracking-widest uppercase text-stone hover:text-espresso transition"
+        className="mt-10 text-sm tracking-widest uppercase text-stone hover:text-brand-deep transition"
       >
         ← {t("menu.back")}
       </button>

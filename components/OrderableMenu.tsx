@@ -5,7 +5,10 @@ import { motion } from "framer-motion";
 import { menu, categories, MenuItem } from "@/lib/menuData";
 import OrderDrawer from "./OrderDrawer";
 import OrderConfirmation from "./OrderConfirmation";
+import PaymentScreen from "./PaymentScreen";
 import { addOrder, OrderItem } from "@/lib/orderStore";
+
+type Stage = "menu" | "payment" | "confirmed";
 
 export default function OrderableMenu({ tableNumber }: { tableNumber: number | null }) {
   const { t, i18n } = useTranslation();
@@ -13,7 +16,9 @@ export default function OrderableMenu({ tableNumber }: { tableNumber: number | n
   const orderable = tableNumber !== null;
   const [cart, setCart] = useState<Record<string, { quantity: number; note?: string }>>({});
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
+  const [stage, setStage] = useState<Stage>("menu");
+  const [generalNote, setGeneralNote] = useState("");
+  const [paidMethod, setPaidMethod] = useState<"swish" | "card" | null>(null);
 
   const cartItems: OrderItem[] = useMemo(() => {
     return Object.entries(cart)
@@ -25,6 +30,7 @@ export default function OrderableMenu({ tableNumber }: { tableNumber: number | n
   }, [cart, lang]);
 
   const itemCount = cartItems.reduce((s, i) => s + i.quantity, 0);
+  const total = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
 
   function inc(id: string) {
     setCart((c) => ({ ...c, [id]: { quantity: (c[id]?.quantity || 0) + 1, note: c[id]?.note } }));
@@ -35,30 +41,58 @@ export default function OrderableMenu({ tableNumber }: { tableNumber: number | n
       return { ...c, [id]: { quantity: q, note: c[id]?.note } };
     });
   }
-  function setNote(id: string, note: string) {
+  function setItemNote(id: string, note: string) {
     setCart((c) => ({ ...c, [id]: { quantity: c[id]?.quantity || 0, note } }));
   }
 
-  function submit(generalNote?: string) {
-    if (tableNumber === null) return;
-    addOrder({ tableNumber, items: cartItems, note: generalNote });
-    setCart({});
+  function goToPayment(note?: string) {
+    setGeneralNote(note || "");
     setDrawerOpen(false);
-    setConfirmed(true);
+    setStage("payment");
   }
 
-  if (confirmed) return <OrderConfirmation onBack={() => setConfirmed(false)} />;
+  function onPaid(method: "swish" | "card") {
+    if (tableNumber === null) return;
+    addOrder({
+      tableNumber,
+      items: cartItems,
+      note: generalNote || undefined,
+      paymentMethod: method,
+      paid: true,
+      total,
+    });
+    setCart({});
+    setGeneralNote("");
+    setPaidMethod(method);
+    setStage("confirmed");
+  }
+
+  if (stage === "payment" && tableNumber !== null) {
+    return (
+      <PaymentScreen
+        items={cartItems}
+        total={total}
+        tableNumber={tableNumber}
+        onCancel={() => setStage("menu")}
+        onPaid={onPaid}
+      />
+    );
+  }
+
+  if (stage === "confirmed") {
+    return <OrderConfirmation method={paidMethod} onBack={() => setStage("menu")} />;
+  }
 
   return (
     <div className="pb-28">
       {orderable && (
-        <div className="bg-espresso text-cream text-center py-3 text-sm tracking-widest uppercase">
+        <div className="bg-brand-deep text-offwhite text-center py-3 text-sm tracking-widest uppercase">
           {t("menu.orderingFor")} {tableNumber}
         </div>
       )}
       <div className="max-w-3xl mx-auto px-6 md:px-10 py-16">
-        <div className="text-xs tracking-[0.3em] uppercase text-stone mb-4">Ohhi</div>
-        <h1 className="font-display text-5xl md:text-6xl text-espresso mb-12">{t("menu.heading")}</h1>
+        <div className="text-xs tracking-[0.3em] uppercase text-brand mb-4">Ohhi</div>
+        <h1 className="font-display text-5xl md:text-6xl text-brand-deep mb-12">{t("menu.heading")}</h1>
         <div className="space-y-16">
           {categories.map((cat) => (
             <CategoryBlock
@@ -82,9 +116,9 @@ export default function OrderableMenu({ tableNumber }: { tableNumber: number | n
           initial={{ y: 80 }}
           animate={{ y: 0 }}
           onClick={() => setDrawerOpen(true)}
-          className="fixed bottom-4 inset-x-4 md:inset-x-auto md:right-8 md:left-auto md:w-96 bg-espresso text-cream py-4 px-6 flex justify-between items-center z-40 shadow-lg"
+          className="fixed bottom-4 inset-x-4 md:inset-x-auto md:right-8 md:left-auto md:w-96 bg-brand-deep text-offwhite py-4 px-6 flex justify-between items-center z-40 shadow-lg"
         >
-          <span className="text-sm tracking-widest uppercase">{t("menu.viewOrder")} ({itemCount})</span>
+          <span className="text-sm tracking-widest uppercase">{t("menu.viewOrder")} ({itemCount}) · {total} kr</span>
           <span>→</span>
         </motion.button>
       )}
@@ -93,8 +127,8 @@ export default function OrderableMenu({ tableNumber }: { tableNumber: number | n
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         items={cartItems}
-        onNoteChange={setNote}
-        onSubmit={submit}
+        onNoteChange={setItemNote}
+        onCheckout={goToPayment}
       />
     </div>
   );
@@ -124,7 +158,7 @@ function CategoryBlock({
   return (
     <div>
       <div className="flex items-baseline justify-between mb-6">
-        <h2 className="text-xs tracking-[0.3em] uppercase text-stone">{lang === "sv" ? titleSv : titleEn}</h2>
+        <h2 className="text-xs tracking-[0.3em] uppercase text-brand">{lang === "sv" ? titleSv : titleEn}</h2>
         {note && <span className="text-xs text-stone">{note}</span>}
       </div>
       <div className="space-y-4">
@@ -145,7 +179,7 @@ function CategoryBlock({
                       <span className="w-5 text-center tabular-nums">{qty}</span>
                     </>
                   )}
-                  <button onClick={() => inc(it.id)} className="w-7 h-7 border border-espresso text-espresso hover:bg-espresso hover:text-cream transition">+</button>
+                  <button onClick={() => inc(it.id)} className="w-7 h-7 border border-brand-deep text-brand-deep hover:bg-brand-deep hover:text-offwhite transition">+</button>
                 </div>
               )}
             </div>

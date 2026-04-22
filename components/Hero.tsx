@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
@@ -13,14 +14,21 @@ export default function Hero() {
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="text-center"
       >
-        <div className="text-[10px] tracking-[0.3em] uppercase text-stone mb-6">
-          <span className="inline-block border border-sand px-3 py-1">{t("hero.opening")}</span>
+        <div className="text-[10px] tracking-[0.3em] uppercase text-brand mb-8">
+          <span className="inline-block border border-brand/40 px-3 py-1">{t("hero.opening")}</span>
         </div>
-        <h1 className="font-display text-espresso leading-none tracking-tight text-[22vw] md:text-[18vw] lg:text-[220px]">
-          OHHI
-        </h1>
-        <div className="w-10 h-px bg-stone mx-auto my-6" />
-        <p className="text-sm md:text-base tracking-wide text-stone">Malmö — Beijerskajen 2</p>
+        <div className="relative w-[min(80vw,520px)] aspect-square mx-auto">
+          <Image
+            src="/bilder/logo.png"
+            alt="Ohhi — Oh, Hi!"
+            fill
+            priority
+            sizes="(max-width: 768px) 80vw, 520px"
+            style={{ objectFit: "contain" }}
+          />
+        </div>
+        <div className="w-10 h-px bg-brand/40 mx-auto my-8" />
+        <p className="text-sm md:text-base tracking-wide text-brand">Malmö — Beijerskajen 2</p>
       </motion.div>
 
       <motion.div
@@ -33,13 +41,13 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/menu"
-            className="px-8 py-3 bg-espresso text-cream text-sm tracking-widest uppercase hover:bg-charcoal transition"
+            className="px-8 py-3 bg-brand-deep text-offwhite text-sm tracking-widest uppercase hover:bg-brand-dark transition"
           >
             {t("hero.orderCta")} →
           </Link>
           <Link
             href="/menu"
-            className="px-8 py-3 border border-espresso text-espresso text-sm tracking-widest uppercase hover:bg-espresso hover:text-cream transition"
+            className="px-8 py-3 border border-brand-deep text-brand-deep text-sm tracking-widest uppercase hover:bg-brand-deep hover:text-offwhite transition"
           >
             {t("hero.menuCta")} →
           </Link>
