@@ -1,0 +1,48 @@
+{
+  "nav": { "menu": "Meny", "about": "Om oss", "visit": "Besök" },
+  "hero": {
+    "tagline": "Kafé & bar. Beijerskajen 2, Malmö.",
+    "orderCta": "Beställ vid bordet",
+    "menuCta": "Se menyn",
+    "opening": "Öppnar juni 2025"
+  },
+  "about": {
+    "heading": "Om oss",
+    "title": "Vilka vi är",
+    "body": "Ohhi började med tre bröder och en gemensam besatthet av detaljerna som de flesta inte lägger märke till. Kaffets temperatur. Brödets textur. Ljuset klockan nio.\n\nVi öppnade på Beijerskajen för att vi ville vara vid vattnet — och för att Malmö förtjänade ett sådant här ställe.\n\nInga genvägar. Inga formler. Bara riktigt bra grejer, gjorda med omsorg.",
+    "photo": "Foto: interiör"
+  },
+  "menu": {
+    "heading": "Meny",
+    "orderingFor": "Beställer för bord",
+    "viewOrder": "Se beställning",
+    "items": "artiklar",
+    "addNote": "Lägg till en notis",
+    "generalNote": "Något mer?",
+    "send": "Skicka till köket",
+    "empty": "Din beställning är tom",
+    "confirmed": "Din beställning är på väg. Sitt ner — vi tar med det till dig.",
+    "back": "Tillbaka till menyn"
+  },
+  "gallery": { "heading": "Stället" },
+  "instagram": { "heading": "@ohhi.malmo", "follow": "Följ oss på Instagram" },
+  "visit": {
+    "heading": "Besök oss",
+    "opening": "Öppnar juni 2025",
+    "hours": "Öppettider",
+    "weekdays": "Mån–Fre   07:00–18:00",
+    "weekends": "Lör–Sön   08:00–17:00"
+  },
+  "footer": { "rights": "© 2025 Ohhi" },
+  "admin": {
+    "pin": "Ange PIN",
+    "login": "Logga in",
+    "wrong": "Fel PIN",
+    "pending": "Väntar",
+    "preparing": "Tillagas",
+    "ready": "Klar",
+    "served": "Serverad",
+    "table": "Bord",
+    "noOrders": "Inga beställningar än."
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "nav": { "menu": "Menu", "about": "About", "visit": "Visit" },
+  "hero": {
+    "tagline": "Café & bar. Beijerskajen 2, Malmö.",
+    "orderCta": "Order at table",
+    "menuCta": "See menu",
+    "opening": "Opening June 2025"
+  },
+  "about": {
+    "heading": "About",
+    "title": "Who we are",
+    "body": "Ohhi started with three brothers and a shared obsession with the details that most people don't notice. The coffee temperature. The bread texture. The light at 9am.\n\nWe opened at Beijerskajen because we wanted to be next to the water — and because Malmö deserved a place like this.\n\nNo shortcuts. No formulas. Just really good stuff, made with care.",
+    "photo": "Photo: interior"
+  },
+  "menu": {
+    "heading": "Menu",
+    "orderingFor": "Ordering for Table",
+    "viewOrder": "View Order",
+    "items": "items",
+    "addNote": "Add a note",
+    "generalNote": "Anything else?",
+    "send": "Send to kitchen",
+    "empty": "Your order is empty",
+    "confirmed": "Your order is on its way. Grab a seat — we'll bring it to you.",
+    "back": "Back to menu"
+  },
+  "gallery": { "heading": "The place" },
+  "instagram": { "heading": "@ohhi.malmo", "follow": "Follow us on Instagram" },
+  "visit": {
+    "heading": "Visit us",
+    "opening": "Opening June 2025",
+    "hours": "Hours",
+    "weekdays": "Mon–Fri   07:00–18:00",
+    "weekends": "Sat–Sun   08:00–17:00"
+  },
+  "footer": { "rights": "© 2025 Ohhi" },
+  "admin": {
+    "pin": "Enter PIN",
+    "login": "Enter",
+    "wrong": "Wrong PIN",
+    "pending": "Pending",
+    "preparing": "Preparing",
+    "ready": "Ready",
+    "served": "Served",
+    "table": "Table",
+    "noOrders": "No orders yet."
+  }
+}
